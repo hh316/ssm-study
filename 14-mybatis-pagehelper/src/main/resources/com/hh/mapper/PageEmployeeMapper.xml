@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = 接口的全限定符 -->
+<mapper namespace="com.hh.mapper.PageEmployeeMapper">
+
+    <select id="selectAllPageHelper" resultType="com.hh.pojo.Employee">
+            select * from t_emp where emp_salary > 200
+    </select>
+</mapper>

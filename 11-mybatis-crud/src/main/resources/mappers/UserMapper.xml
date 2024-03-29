@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = 接口的全限定符 -->
+<mapper namespace="com.hh.mapper.UserMapper">
+    <insert id="insertUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into user(username,password) values (#{username},#{password})
+    </insert>
+    <delete id="deleteUserById">
+        delete from user where id = #{id}
+    </delete>
+    <update id="updateUser">
+        update user set username=#{username},password=#{password} where id =#{id}
+    </update>
+    <select id="selectUserById" resultType="com.hh.pojo.User">
+        select id,username,password from user where id = #{id}
+    </select>
+    <select id="selectUserAll" resultType="com.hh.pojo.User">
+        select id ,username,password from user
+    </select>
+</mapper>

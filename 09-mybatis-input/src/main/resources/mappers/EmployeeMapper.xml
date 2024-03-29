@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = 接口的全限定符 -->
+<mapper namespace="com.hh.mapper.EmployeeMapper">
+    <!--1.单个简单值参数                    任意-->
+    <select id="selectEmployeeById" resultType="employee">
+        select emp_id ,emp_name ,emp_salary from t_emp where emp_id = #{啥都行}
+    </select>
+    <!--2.多个简单值参数                    @param("值")-->
+    <select id="selectEmployeeByIdAndName" resultType="employee">
+        select emp_id,emp_name,emp_salary from t_emp where emp_id = #{empId} or emp_name =#{empName}
+    </select>
+    <!--3.实体参数                         实体属性名-->
+    <insert id="insertEmployee">
+        insert into t_emp values (#{empId},#{empName},#{empSalary})
+    </insert>
+    <!--4.Map参数                         key值-->
+    <insert id="insertEmpMap">
+        insert into t_emp values (#{empId},#{empName},#{empSalary})
+    </insert>
+</mapper>

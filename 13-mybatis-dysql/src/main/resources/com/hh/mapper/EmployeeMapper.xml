@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = 接口的全限定符 -->
+<mapper namespace="com.hh.mapper.EmployeeMapper">
+
+
+    <select id="selectByNameAndSalary" resultType="com.hh.pojo.Employee">
+        select * from t_emp
+        <where>
+            <if test="empName!= ''">
+                emp_name = #{empName}
+            </if>
+            <if test="empSalary!= ' '">
+                and emp_salary = #{empSalary}
+            </if>
+        </where>
+    </select>
+    <update id="updateById">
+        update t_emp
+        <set>
+            <if test="empName!=null">
+                emp_name = #{empName},
+            </if>
+            <if test="empSalary!=null ">
+                emp_salary = #{empSalary}
+            </if>
+            where emp_id =#{empId}
+        </set>
+    </update>
+
+
+    <select id="selectTrimByNameAndSalary" resultType="com.hh.pojo.Employee">
+        select * from t_emp
+<!--       prefix前缀 suffix后缀-->
+        <trim prefix="where" suffixOverrides="and">
+            <if test="empName!= ''">
+                emp_name = #{empName}
+            </if>
+            <if test="empSalary!= ' '">
+                and emp_salary = #{empSalary}
+            </if>
+        </trim>
+
+    </select>
+    <select id="selectChooseByNameAndSalary" resultType="com.hh.pojo.Employee">
+        select * from t_emp where
+        <choose>
+            <when test="empName!=null">
+                emp_name = #{empName}
+            </when>
+            <when test="empSalary!=null">
+                emp_salary = #{empSalary}
+            </when>
+           <otherwise>
+               1=1
+           </otherwise>
+        </choose>
+
+    </select>
+<!--批量查询-->
+<!-- sql片段 include引用-->
+    <sql id="select">
+        select emp_id, emp_name, emp_salary from t_emp
+    </sql>
+    <select id="selForeach" resultType="com.hh.pojo.Employee">
+        <include refid="select"/> where emp_id in
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+<!--批量删除-->
+    <delete id="delForeach">
+        delete from t_emp where emp_id in
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+<!--批量添加-->
+    <insert id="insertForeach" useGeneratedKeys="true" keyProperty="empId" keyColumn="emp_id">
+        insert into t_emp(emp_name,emp_salary) values
+        <foreach collection="employees" item="emp" separator="," >
+            (#{emp.empName},#{emp.empSalary})
+        </foreach>
+
+    </insert>
+<!--批量修改-打开设置allowMultiQueries=true 结束要加;-->
+    <update id="updateForeach" >
+        <foreach collection="list" item="emp">
+            update t_emp set emp_name =#{emp.empName},emp_salary=#{emp.empSalary} where emp_id = #{emp.empId};
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--1.单个构造参数注入-->
+    <bean id="userDao" class="com.hh.di.UserDao"/>
+    <bean id="userService1" class="com.hh.di.UserService">
+        <constructor-arg ref="userDao"></constructor-arg>
+    </bean>
+<!--2.多个构造参数注入-->
+<!--    方式1-->
+    <bean id="userService2" class="com.hh.di.UserService">
+        <constructor-arg value="12"/>
+        <constructor-arg value="王小1"/>
+        <constructor-arg ref="userDao"/>
+    </bean>
+<!--    方式2-->
+    <bean id="userService3" class="com.hh.di.UserService">
+        <!-- name是构造的参数 ref是其他bean的id-->
+        <constructor-arg name="age" value="12"/>
+        <constructor-arg name="name" value="王小2"/>
+        <constructor-arg name="userDao" ref="userDao"/>
+    </bean>
+<!--    方式3-->
+    <bean id="userService4" class="com.hh.di.UserService">
+        <!-- name是构造的参数 ref是其他bean的id-->
+        <constructor-arg index="0" value="12"/>
+        <constructor-arg index="1" value="王小3"/>
+        <constructor-arg index="2" ref="userDao"/>
+    </bean>
+<!--    3.set方法注入-->
+    <bean id="userServlet" class="com.hh.di.UserServlet">
+        <property name="age" value="11"/>
+        <property name="name" value="王小4"/>
+        <property name="userService" ref="userService1"/>
+    </bean>
+</beans>

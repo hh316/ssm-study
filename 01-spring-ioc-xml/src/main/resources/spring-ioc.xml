@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--     1.通过无参构造函数实例化对象-->
+    <bean id="wuCanComponent" class="com.hh.ioc.WuCanComponent"/>
+    <!--    2.静态工厂实例化对象-->
+    <bean id="staticFactoryComponent" class="com.hh.ioc.StaticFactoryComponent" factory-method="createInstance"/>
+    <!--    3.非静态工厂实例化对象-->
+    <bean id="noStaticFactoryComponent" class="com.hh.ioc.NoStaticFactoryComponent"/>
+    <bean id="people" factory-bean="noStaticFactoryComponent" factory-method="creatNoStaticFactoryInstance"></bean>
+    <!--    4.通过有参构造函数实例化对象-->
+    <bean id="people2"  class="com.hh.ioc.People">
+        <constructor-arg name="name" value="人2"></constructor-arg>
+    </bean>
+</beans>

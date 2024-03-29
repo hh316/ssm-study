@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = 接口的全限定符 -->
+<mapper namespace="com.hh.mapper.TeacherMapper">
+     <resultMap id="teaMap" type="teacher">
+          <id column="t_id" property="tId"/>
+          <result column="t_name" property="tName"/>
+     </resultMap>
+
+    <insert id="insertTeacher">
+        <selectKey  order="BEFORE" resultType="string" keyProperty="tId">
+            select replace(uuid(),'-','')
+        </selectKey>
+        insert into teacher values (#{tId},#{tName})
+    </insert>
+    <select id="selectTeaById" resultMap="teaMap">
+     select t_id,t_name from teacher where t_id = #{tId}
+    </select>
+</mapper>

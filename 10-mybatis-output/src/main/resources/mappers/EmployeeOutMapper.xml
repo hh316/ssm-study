@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = 接口的全限定符 -->
+<mapper namespace="com.hh.mapper.EmployeeOutMapper">
+    <!-- 1.返回单个简单值-->
+    <select id="selectSalaryById" resultType="java.lang.Integer">
+        select emp_salary from t_emp where emp_id=#{empId}
+    </select>
+<!-- 2.返回自定义实体-->
+    <select id="selectEmpById" resultType="employee">
+        select emp_id,emp_name,emp_salary from t_emp where emp_id =#{empId}
+    </select>
+<!-- 3.返回map-->
+    <select id="selectEmpNameAndMaxSalaryById" resultType="java.util.Map">
+        select emp_name,emp_salary from t_emp where emp_id =#{empId}
+    </select>
+<!-- 4.返回集合-->
+    <select id="selectListEmpBySalary" resultType="employee">
+        select emp_id,emp_name,emp_salary from t_emp where emp_salary >20
+    </select>
+<!--5.主键回显-->
+    <insert id="insertEmp" useGeneratedKeys="true" keyColumn="emp_id" keyProperty="empId">
+        insert into t_emp(emp_name,emp_salary) values (#{empName},#{empSalary})
+    </insert>
+</mapper>

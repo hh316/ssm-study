@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = 接口的全限定符 -->
+<mapper namespace="com.hh.mapper.OrderMapper">
+    <resultMap id="orderMap" type="order">
+        <id column="order_id" property="orderId"></id>
+<!--        <result column="order_name" property="orderName"/>-->
+<!--        <result column="customer_id" property="customerId"/>-->
+        <association property="customer" javaType="customer">
+            <id column="customer_id" property="customerId"/>
+<!--            <result column="customer_name" property="customerName"/>-->
+        </association>
+    </resultMap>
+    <select id="selectOrder" resultMap="orderMap">
+        select * from t_order tor  join t_customer tcu on tor.customer_id=tcu.customer_id where order_id =#{orderId}
+    </select>
+</mapper>
